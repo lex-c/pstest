@@ -1,0 +1,32 @@
+{
+  "name": "flightslab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./bin/connection",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lex-c/flightslab.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lex-c/flightslab/issues"
+  },
+  "homepage": "https://github.com/lex-c/flightslab#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.10.0",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.0"
+  }
+}
