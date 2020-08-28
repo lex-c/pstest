@@ -5,5 +5,5 @@ const p4CD = document.getElementById('p4Count')
 const p5CD = document.getElementById('p5Count')
 const p6CD = document.getElementById('p6Count')
 
-let p1Ct, p2Ct, p3Ct, p4Ct, p5Ct, p6Ct = 0
+let p1Ct = 0
 
