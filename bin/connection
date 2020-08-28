@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+const User = require('../models/user')
 const app = require('../server')
 const debug = require('debug')('exptemplate:server')
 const http = require('http')
@@ -12,9 +12,16 @@ const io = require('socket.io')(server)
 
 io.on('connection', (socket) => {
     console.log('connected now')
-    socket.on('upInt', (obj) => {
-        // console.log(socket.handshake.xdomain)
-        console.log('receiving', obj)
+    socket.on('upInt', (personPicInt) => {
+        console.log('receiving', socket.handshake.address, personPicInt)
+        // let picsIntObj = {picObjId: personPicInt[0], int: personPicInt[1]}
+        // User.find({ipAdd: socket.handshake.address}, (err, user) => {
+        //         if (err) { User.create({ipAdd: socket.handshake.address, picsInt: picsIntObj})}
+        //         else { User.find({'picsInt.picObjId': personPicInt[0]}, (err, userWithPic) => {
+        //                     if (err) {user.picsInt.push(picsIntObj)}
+        //                     else {user.picsInt.picObjId = personPicInt[1]}
+        //                 })}
+        //         })
     })
     socket.on('disconnect', () => console.log('they left now'))
 })
