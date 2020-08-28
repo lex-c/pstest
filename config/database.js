@@ -1,8 +1,9 @@
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
-// const dbOnes = mongoose.createConnection(process.env./*--your typeone MongoDB URI name from .env---*/, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+mongoose.connect(process.env.DB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
 
-// dbOnes.on('connected', () => console.log(`connected to MongoDB Ones at ${dbOnes.host}:${dbOnes.port}`))
+const dbCtn = mongoose.connection
+dbCtn.on('connected', () => console.log(`connected to MongoDB Users at ${dbCtn.host}:${dbCtn.port}`))
 
 // const dbTwos = mongoose.createConnection(process.env./*--your typetwo MongoDB URI name from .env---*/, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
 
