@@ -12,10 +12,7 @@ const io = require('socket.io')(server)
 
 io.on('connection', (socket) => {
     console.log('connected now')
-    socket.on('upInt', (obj) => {
-        JSON.parse(obj)
-        .then(obj2 => console.log(obj2.keys(), obj2.values()))
-    })
+    socket.on('upInt', () => console.log('receiving'))
     socket.on('disconnect', () => console.log('they left now'))
 })
 
