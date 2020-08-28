@@ -15,6 +15,7 @@ const app = express()
 
 app.set('view engine', 'pug')
 
+app.use(cors())
 app.use(logger('dev'))
 app.use(express.static('public'))
 app.use(express.json())
