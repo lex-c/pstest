@@ -8,3 +8,6 @@
 //     pic1 = document.getElementById('pic1b')
 //     pic1.offsetHeight
 // }
+
+var socket = io()
+socket.emit('upInt', json({`${pic1.dataset.picId}`: p1Ct}))
