@@ -1,7 +1,9 @@
-
-module.exports = {onesIndex}
+const express = require('express')
 
 function onesIndex(req, res) {
-    if (!req.user) res.render('typeones/index', {title: 'Ones' , ip: req.connection.remoteAddress})
-    res.render('typeones/index', {title: 'Ones', name: req.user.name, user: req.user, ip: req.connection.remoteAddress})
+    if (!req.user) return res.render('typeones/index', {title: 'Ones'})
+    res.render('typeones/index', {title: 'Ones', name: req.user.name, user: req.user})
 }
+
+
+module.exports = {onesIndex}

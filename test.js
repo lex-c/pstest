@@ -11,3 +11,7 @@
 
 var socket = io()
 socket.emit('upInt', json({`${pic1.dataset.picId}`: p1Ct}))
+
+// allImgs.forEach(img, i => {
+//     img.setAttribute('data-picId', `${rotPics[i]._id)
+//     img.setAttribute('src', `${rotPics[i].picUrl}`)

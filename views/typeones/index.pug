@@ -8,26 +8,25 @@ html(lang="en")
             iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NRKGV7C" height="0" width="0" style="display:none;visibility:hidden")
         include ../partials/nav
         h1 ps Home
-        a(href="#" name='buttonHa' onclick="dataLayer.push({'event': 'clickeroo'})") ButtButt
         div#p1D
-            img(id="pic1" data-picId="a" src="https://picsum.photos/id/1000/500")
-        h1#p1Count
+            img(id="pic1")
         div#p2D
-            img(id="pic2" data-picId="b" src="https://picsum.photos/id/1003/500")
-        h1#p2Count
+            img(id="pic2")
         div#p3D
-            img(id="pic3" data-picId="c" src="https://picsum.photos/id/1002/500")
-        h1#p3Count
+            img(id="pic3")
         div#p4D
-            img(id="pic4" data-picId="d" src="https://picsum.photos/id/1050/500")
-        h1#p4Count
+            img(id="pic4")
         div#p5D
-            img(id="pic5" data-picId="e" src="https://picsum.photos/id/1010/500")
-        h1#p5Count
+            img(id="pic5")
         div#p6D
-            img(id="pic6" data-picId="f" src="https://picsum.photos/id/1035/500")
-        h1#p6Count
+            img(id="pic6")
         include ../partials/footer
-        script(src="/socket.io/socket.io.js")
-        script.
-            var socket = io()
+        //- script(src="/socket.io/socket.io.js")
+        //- script.
+        //-     var socket = io()
+        //-     socket.on('nextPics', rotPics => {
+        //-         allImgs.forEach(img, i => {
+        //-             img.setAttribute('data-picId', `${rotPics[i]._id)
+        //-             img.setAttribute('src', `${rotPics[i].picUrl}`)
+        //-         })
+        //-     })

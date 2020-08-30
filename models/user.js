@@ -1,23 +1,22 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const picsIntSchema = new Schema({
-    picId: String,
-    intNum: Number
+const picSchema = new Schema({
+    picUrl: String,
+    picTags: [String],
+    intNum: {type: Number, default: 0}
 })
 
-const picsRotSchema = new Schema({
-    picId: String,
-    intNum: {type: Number, default: 0}
-    // srcUrl: String
-})
+
 const userSchema = new Schema({
     name: String,
     email: String,
     googleId: String,
     ipAdd: String,
-    picsInt: [picsIntSchema],
-    picsRot: [picsRotSchema]
+    intTags: {type: [String], default: []},
+    intPics: {type: [picSchema], default: []},
+    rotPics: {type: [picSchema], default: []},
+    logPics: {type: [picSchema], default: []},
 }, {timestamps: true})
 
 module.exports = mongoose.model('User', userSchema)

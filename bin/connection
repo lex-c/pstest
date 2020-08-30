@@ -1,29 +1,30 @@
 #!/usr/bin/env node
-const User = require('../models/user')
 const app = require('../server')
 const debug = require('debug')('exptemplate:server')
 const http = require('http')
+// const userCtrlr = require('../controllers/users')
 
 const port = normalizePort(process.env.PORT || '3000')
 app.set('port', port)
 
 const server = http.createServer(app)
-const io = require('socket.io')(server)
+// const io = require('socket.io')(server)
+// userCtrlr.setUser(io)
 
-io.on('connection', (socket) => {
-    console.log('connected now')
-    socket.on('upInt', (currPicInt) => {
-        console.log('receiving', socket.handshake.address, currPicInt)
-        const currPicId = currPicInt[0]
-        const currIntNum = parseInt(currPicInt[1])
-        User.exists({ipAdd: socket.handshake.address}, (err, user) => {
-            if (err) return console.log(err)
-            if (!user) User.create({ipAdd: socket.handshake.address, picsRot: [{picId: 'a'}, {picId: 'b'}, {picId: 'c'}, {picId: 'd'}, {picId: 'e'}, {picId: 'f'}]}, (err, user) => {for (let pic of user.picsRot) if (pic.picId === currPicId) pic.set({intNum: currIntNum}); user.save()})
-            if (user) User.findOne({ipAdd: socket.handshake.address}, (err, user) => {for (let pic of user.picsRot) if (pic.picId === currPicId) pic.set({intNum: currIntNum}); user.save()})
-        })
-    })
-    socket.on('disconnect', () => console.log('they left now'))
-})
+// io.on('connection', (socket) => {
+//     console.log('connected now')
+//     socket.on('upInt', (currPicInt) => {
+//         console.log('receiving', socket.handshake.address, currPicInt)
+//         const currPicId = currPicInt[0]
+//         const currIntNum = parseInt(currPicInt[1])
+//         User.exists({ipAdd: socket.handshake.address}, (err, user) => {
+//             if (err) return console.log(err)
+//             if (!user) User.create({ipAdd: socket.handshake.address, picsRot: [{picId: 'a'}, {picId: 'b'}, {picId: 'c'}, {picId: 'd'}, {picId: 'e'}, {picId: 'f'}]}, (err, user) => {for (let pic of user.picsRot) if (pic.picId === currPicId) pic.set({intNum: currIntNum}); user.save()})
+//             if (user) User.findOne({ipAdd: socket.handshake.address}, (err, user) => {for (let pic of user.picsRot) if (pic.picId === currPicId) pic.set({intNum: currIntNum}); user.save()})
+//         })
+//     })
+//     socket.on('disconnect', () => console.log('they left now'))
+// })
 
 server.listen(port)
 server.on('error', consoleError)
