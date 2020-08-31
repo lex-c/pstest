@@ -1,4 +1,3 @@
+const usersIndex = (req, res) => res.render('users/index', {title: 'Users'})
 
-module.exports = {twosIndex}
-
-function twosIndex(req, res) {res.render('typetwos/index', {title: 'Twos'})}
+module.exports = {usersIndex}

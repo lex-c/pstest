@@ -1,4 +1,4 @@
 
 module.exports = {index}
 
-function index(req, res) {res.redirect('/typeones')}
+function index(req, res) {res.redirect('/pics')}

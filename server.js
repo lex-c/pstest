@@ -11,7 +11,7 @@ require('./config/database')
 require('./config/pass')
 const cors = require('cors')
 const indexRouter = require('./routes/index')
-const onesRouter = require('./routes/typeones')
+const picsRouter = require('./routes/pics')
 const authRouter =require('./routes/auth')
 // const twosRouter = require('./routes/typetwos')
 
@@ -35,7 +35,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/', indexRouter)
-app.use('/typeones', onesRouter)
+app.use('/pics', picsRouter)
 app.use('/auth', authRouter)
 // app.use('/typetwos', twosRouter)
 

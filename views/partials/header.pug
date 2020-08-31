@@ -10,3 +10,12 @@ head
                 })(window,document,'script','dataLayer','GTM-NRKGV7C');
         script(defer src="/js/main.js")
         title exptemplate: #{title}
+        body
+                nav
+                        a(href="/pics") Pics
+                        a(href="#") Users
+                        if (user)
+                            a(href="/auth/logout") logout
+                        else
+                            a(href="/auth/google") login
+                block content
