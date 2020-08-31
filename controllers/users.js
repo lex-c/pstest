@@ -67,7 +67,7 @@ const sendPics = (user, socket) => {
         optimTags = ''
         optimToQuery = ''
     }
-    if (optimTags) optimToQuery = optimTags.split(' ').join('').split(',').join('+')
+    if (optimTags) optimToQuery = optimTags.join('+')
     console.log(optimTags)
     const options = {
         url: 'https://pixabay.com/api/',
