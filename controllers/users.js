@@ -22,10 +22,10 @@ const setUser = (ioVar) => {
             User.findOne({ipAdd: socket.handshake.address}, (err, user) => {
                 for (let rotPic of user.rotPics) {
                     if (rotPic._id.equals(currPicId)) {
-                        console.log('found the rotPic')
+                        // console.log('found the rotPic')
                         rotPic.set({intNum: currIntNum})
                         let rotPicUrls1 = user.rotPics.map(pic => pic.picTags)
-                        console.log(`original rotPics: ${rotPicUrls1}`)
+                        // console.log(`original rotPics: ${rotPicUrls1}`)
                         if (currIntNum > 3) {
                             let contains = false
                             for (let intPic of user.intPics) {
@@ -35,7 +35,7 @@ const setUser = (ioVar) => {
                                 }
                             }
                             if (!contains) user.intPics.push(rotPic)
-                            console.log('newintpics', user.intPics)
+                            // console.log('newintpics', user.intPics)
                         }
                     }
                 }
@@ -55,7 +55,7 @@ const setUser = (ioVar) => {
 
 const sendPics = (user, socket) => {
     console.log('in the send pics', user.intTags)
-    let optimTags, allTags
+    let optimTags, allTags, optimToQuery
     if (user.intPics.length) {
         console.log('theres intpics')
         allTags = user.intPics.reduce((a, pic) => {pic.picTags.forEach(tag => a.push(tag)); return a}, [])
@@ -65,20 +65,23 @@ const sendPics = (user, socket) => {
         optimTags = _.chain(allTags).countBy().toPairs().sortBy(1).reverse().map(0).value().slice(0, 4)
     } else {
         optimTags = ''
+        optimToQuery = ''
     }
+    if (optimTags) optimToQuery = optimTags.split(' ').join('').split(',').join('+')
+    console.log(optimTags)
     const options = {
         url: 'https://pixabay.com/api/',
         method: 'get',
         params: {
             key: process.env.PIXB_KEY,
-            q: optimTags,
+            q: optimToQuery,
             image_type: 'photo',
             per_page: 6,
         }
     }
     axios(options)
     .then(response => {
-        // console.log(response.data.hits)
+        console.log(response.data.hits)
         const currentRotPics = response.data.hits.reduce((a, hit) => {a.push({picUrl: hit.webformatURL, picTags: hit.tags.split(' ').join('').split(',')}); return a}, []) 
         user.set({rotPics: [...currentRotPics]})
         user.set({intTags: [...optimTags]})
