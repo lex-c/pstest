@@ -38,7 +38,7 @@ const setUser = (ioVar) => {
                             }
                             if (!contains) user.intPics.push(rotPic)
                             user.intPics.sort((a, b) => b.intNum - a.intNum)
-                            user.intPics.forEach((pic, idx) => {if (idx > 2) user.intPics.pull(pic)})
+                            user.intPics.forEach((pic, idx) => {if (idx > 4) user.intPics.pull(pic)})
                         }
                     }
                 }
@@ -67,7 +67,7 @@ const sendPics = (user, socket) => {
         optimTags = _.chain(allTags).countBy().toPairs().sortBy(1).reverse().map(0).value().slice(0, 3)
     } else {
         optimTags = ''
-        optimToQuery = ''
+        optimToQuery = 'people'
     }
     if (optimTags) optimToQuery = [...optimTags].join('+')
     const options = {
@@ -77,14 +77,13 @@ const sendPics = (user, socket) => {
             key: process.env.PIXB_KEY,
             q: optimToQuery,
             image_type: 'photo',
-            min_height: 800,
             order: 'latest',
             per_page: 10,
         }
     }
     axios(options)
     .then(response => {
-        // console.log(response.data.hits)
+        console.log(response.data.hits.map(hit => hit.id))
         let currentRotPics = response.data.hits.reduce((a, hit) => {a.push({picUrl: hit.webformatURL, picTags: hit.tags.split(' ').join('').split(',')}); return a}, []) 
         let rotPicsToSet = currentRotPics.reduce((a, rotPic, idx) => {
             for (let pastPic of user.rotPics) {
@@ -92,14 +91,21 @@ const sendPics = (user, socket) => {
             }
             return a
         }, {currentRotPics, pastStaying: []})
+        console.log("the reduce compare: ", user.rotPics.map(pic => pic.intNum), rotPicsToSet.currentRotPics.map(pic => pic.picUrl), rotPicsToSet.pastStaying.map(pic => pic.intNum))
         if (rotPicsToSet.pastStaying.length) {
             let pastUrls = rotPicsToSet.pastStaying.map(pic => pic.picUrl.slice(0, -13))
-            for (let pastPic of user.rotPics) if (!pastUrls.includes(pastPic.picUrl.slice(0, -13))) user.rotPics.pull(pastPic)
+            let count = 0
+            console.log('before: ', user.rotPics.map(pic => pic.intNum))
+            for (let pastPic of user.rotPics) if (!pastUrls.includes(pastPic.picUrl.slice(0, -13)) && count <= rotPicsToSet.currentRotPics.length) {user.rotPics.pull(pastPic); count += 1}
+            console.log('after: ', user.rotPics.map(pic => pic.intNum))
         }
         for (let pic of rotPicsToSet.currentRotPics) user.rotPics.push(pic)
         user.set({intTags: [...optimTags]})
         user.save()
-        .then(user => socket.emit('nextPics', user.rotPics))
+        .then(user => {
+            console.log(`curr rot pics: ${user.rotPics.map(pic => pic.intNum)}`)
+            socket.emit('nextPics', user.rotPics)
+        })
     })
 }
 

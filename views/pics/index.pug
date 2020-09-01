@@ -31,7 +31,7 @@ block content
     script.
         var socket = io()
         socket.on('nextPics', rotPics => {
-            console.log('in here')
+            console.log(`in here and the rotPics are ${rotPics.map(pic => pic.picUrl)}`)
             p1Ct = p2Ct = p3Ct = p4Ct = p5Ct = p6Ct = p7Ct = p8Ct = p9Ct = p10Ct = 0
             allImgs.forEach((img, i) => {
                 img.setAttribute('data-picId', `${rotPics[i]._id}`)
