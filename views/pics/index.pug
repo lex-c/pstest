@@ -5,24 +5,34 @@ block content
     if (user)
         h1 Hi #{name}
     h1 ps Home
-    div#p1D
+    #p1D
         img(id="pic1")
-    div#p2D
+    #p2D
         img(id="pic2")
-    div#p3D
+    #p3D
         img(id="pic3")
-    div#p4D
+    #p4D
         img(id="pic4")
-    div#p5D
+    #p5D
         img(id="pic5")
-    div#p6D
+    #p6D
         img(id="pic6")
+    #p7D
+        img(id="pic7")
+    #p8D
+        img(id="pic8")
+    #p9D
+        img(id="pic9")
+    #p10D
+        img(id="pic10")
+
     include ../partials/footer
     script(src="/socket.io/socket.io.js")
     script.
         var socket = io()
         socket.on('nextPics', rotPics => {
             console.log('in here')
+            p1Ct = p2Ct = p3Ct = p4Ct = p5Ct = p6Ct = p7Ct = p8Ct = p9Ct = p10Ct = 0
             allImgs.forEach((img, i) => {
                 img.setAttribute('data-picId', `${rotPics[i]._id}`)
                 img.setAttribute('src', `${rotPics[i].picUrl}`)
