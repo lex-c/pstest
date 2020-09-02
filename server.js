@@ -12,7 +12,7 @@ require('./config/pass')
 const cors = require('cors')
 const indexRouter = require('./routes/index')
 const picsRouter = require('./routes/pics')
-const authRouter =require('./routes/auth')
+const authRouter = require('./routes/auth')
 // const twosRouter = require('./routes/typetwos')
 
 const app = express()

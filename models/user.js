@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const picSchema = new Schema({
     picUrl: String,
     picTags: [String],
-    intNum: {type: Number, default: 0}
+    intNum: {type: Number, default: 0},
+    apiPId: String
 })
 
 
