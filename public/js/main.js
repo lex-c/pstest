@@ -31,3 +31,47 @@ let topImgs, bottomImgs
 
 let p1Ct = p2Ct = p3Ct = p4Ct = p5Ct = p6Ct = p7Ct = p8Ct = p9Ct = p10Ct = 0
 
+bottomImgs = document.querySelectorAll('.btm-img')
+bottomImgs.forEach(img => {
+    img.addEventListener('mouseover', enlarge)
+})
+
+function enlarge(e) {
+    socket.disconnect()
+    e.target.setAttribute('class', 'larger')
+    e.target.addEventListener('mouseleave', turnOff)
+    e.target.addEventListener('click', addToCart)
+}
+
+function turnOff(e) {
+    e.target.setAttribute('class', 'regular')
+    e.target.removeEventListener('mouseleave', turnOff)
+    e.target.removeEventListener('click', addToCart)
+    socket = io()
+    socket.on('nextPics', putPicsIn)
+}
+
+function addToCart(e) {
+    console.log('added!')
+}
+
+function putPicsIn(rotPics) {
+    console.log(`in here and the rotPics are ${rotPics.map(pic => pic.apiPId)}; and ip is ${ipVal}`)
+    p1Ct = p2Ct = p3Ct = p4Ct = p5Ct = p6Ct = p7Ct = p8Ct = p9Ct = p10Ct = 0
+    topImgs = document.querySelectorAll('.top-img')
+    bottomImgs = document.querySelectorAll('.btm-img')
+    if (bottomImgs[0].dataset.picid) {
+        topImgs.forEach((img, i) => {
+            let pID = bottomImgs[i].dataset.picid
+            let pSrc = bottomImgs[i].src
+            console.log(pID, pSrc)
+            img.setAttribute('data-picid', `${pID}`)
+            img.setAttribute('src', `${pSrc}`)
+        })
+    }
+    bottomImgs.forEach((img, i) => {
+        img.setAttribute('data-picid', `${rotPics[i].apiPId}`)
+        img.setAttribute('src', `${rotPics[i].picUrl}`)
+    })
+    window.scrollTo(0, `${document.body.scrollTop / 2}`) 
+}

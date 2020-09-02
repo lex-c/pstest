@@ -26,3 +26,11 @@ footer {
     bottom: 0;
     width: 100%;
 }
+.larger {
+    height: 50rem;
+    width: auto;
+}
+.regular {
+    height: initial;
+    width: initial;
+}
