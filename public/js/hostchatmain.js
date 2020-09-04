@@ -1,4 +1,4 @@
-const user = require("../../models/user")
+
 
 
 const reqD = document.querySelector('.requestdiv')
