@@ -3,7 +3,7 @@ block content
     noscript
         iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NRKGV7C" height="0" width="0" style="display:none;visibility:hidden")
     input(type="hidden" id="isUser" value=`${!!user}`)
-    input(type="hidden" id="isAdd" value=`${!!isAdd}`)
+    input(type="hidden" id="isAdd" value=isAdd)
     -const ipAdd = user ? user.ipAdd : null
     input(type="hidden" id="userIp" value=`${ipAdd}`)
     .requestdiv

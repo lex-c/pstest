@@ -1,7 +1,7 @@
 const User = require("../models/user")
 
 const chatPage = (req, res) => {
-    const isAdd = req.params.isAdd ? true : false
+    const isAdd = req.params.isAdd ? 'isAdd' : ''
     User.findOne({ipAdd: req.params.userIp}, (err, userByIp) => {
         res.render('pics/chat', {title: 'Chat', user: userByIp, isAdd})
     })
@@ -21,7 +21,7 @@ const hostAddMess = (req, res) => {
 
 const hostPage = (req, res) => {
     if (req.params.userIp) {
-        const isAdd = req.params.isAdd ? true : false
+        const isAdd = req.params.isAdd ? 'isAdd' : ''
         User.findOne({ipAdd: req.params.userIp}, (err, user) => {
             res.render('pics/hostchat', {user, isAdd})
         })
