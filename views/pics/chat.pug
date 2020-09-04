@@ -28,12 +28,11 @@ block content
     script(src="/js/chatmain.js")
     script(src="/socket.io/socket.io.js")
     script.
-        console.log(isAdd)
         var socket = io()
         if (!isAdd) socket.emit('askToChat', [nmVal, itVal, ipVal])
         socket.on('rqAccepted', hideMess)
         socket.on('hostLeft', showMess)
-        if (isAdd) {hideMess; socket.emit('userMess', 1)}
+        if (isAdd) {hideMess(); socket.emit('userMess', 1)}
         socket.on('inMess', () => {
             fetch(`/chat/${ipVal}/true`)
         })

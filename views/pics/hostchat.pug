@@ -39,7 +39,6 @@ block content
     script(src="/js/hostchatmain.js")
     script(src="/socket.io/socket.io.js")
     script.
-        console.log(isAdd)
         var socket = io()
         socket.on('incoming', showRequest)
         socket.on('disconnect', () => {
