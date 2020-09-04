@@ -47,6 +47,6 @@ block content
         if (isUser && !isAdd) socket.emit('isUser', 1)
         if (isAdd) socket.emit('hostMess', 1)
         socket.on('inMess', () => {
-            fetch(`/chat/host/${ipVal}/true`)
+            fetch(`https://intdesigns.herokuapp.com/chat/host/${ipVal}/true`)
         })
         
