@@ -30,12 +30,11 @@ block content
     script(src="/socket.io/socket.io.js")
     script.
         var socket = io()
-        console.log(!isAdd)
         if (!isAdd) socket.emit('askToChat', [nmVal, itVal, ipVal])
         socket.on('rqAccepted', hideMess)
         socket.on('hostLeft', showMess)
         if (!!isAdd) hideMess()
-        if (!!isAdd && !!me) socket.emit('userMess', 1)}
+        if (!!isAdd && !!me) socket.emit('userMess', 1)
         socket.on('inMess', () => {
             location = `https://intdesigns.herokuapp.com/chat/${ipVal}/true/false`
         })
