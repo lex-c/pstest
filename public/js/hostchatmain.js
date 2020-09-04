@@ -1,6 +1,7 @@
 const reqD = document.querySelector('.requestdiv')
 let name
 const showRequest = (nameIntsIp) => {
+    console.log('getting the request')
     name = nameIntsIp[0] ? nameIntsIp[0] : `Someone who hasn't given their name`
     reqD.innerHTML =
         `${name} is asking to chat with you; 
