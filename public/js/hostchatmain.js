@@ -7,4 +7,5 @@ const showRequest = (nameIntsIp) => {
         they like:${nameIntsIp[1].map(int => ` ${int}`)}
         accept? <a href="/chat/host/${nameIntsIp[2]}">yes</a>`
     reqD.style.setProperty('display', 'inherit')
+    reqD.offsetHeight
 }
