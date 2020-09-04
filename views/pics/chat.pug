@@ -5,6 +5,7 @@ block content
     input(id="nmInp" type="hidden" value=user.name)
     input(id="itInp" type="hidden" value=user.intTags)
     input(id="ipInp" type="hidden" value=user.ipAdd)
+    input(id="isAdd" type="hidden" value=`${!!isAdd}`)
     .picsdiv
         if user.binPics.length
             each pic in user.binPics
@@ -28,6 +29,10 @@ block content
     script(src="/socket.io/socket.io.js")
     script.
         var socket = io()
-        socket.emit('askToChat', [nmVal, itVal, ipVal])
+        if (!isAdd) socket.emit('askToChat', [nmVal, itVal, ipVal])
         socket.on('rqAccepted', hideMess)
         socket.on('hostLeft', showMess)
+        if (isAdd) {hideMess; socket.emit('userMess', 1)}
+        socket.on('inMess', () => {
+            location = location
+        })

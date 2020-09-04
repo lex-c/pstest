@@ -109,6 +109,12 @@ const setUser = (ioVar) => {
         socket.on('isUser', () => {
             socket.broadcast.emit('rqAccepted', 1)
         })
+        socket.on('hostMess', () => {
+            socket.broadcast.emit('inMess', 1)
+        })
+        socket.on('userMess', () => {
+            socket.broadcast.emit('inMess', 1)
+        })
         socket.on('leaving', () => {
             socket.broadcast.emit('hostLeft', 1)
         })

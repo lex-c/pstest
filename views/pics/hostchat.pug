@@ -3,6 +3,7 @@ block content
     noscript
         iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NRKGV7C" height="0" width="0" style="display:none;visibility:hidden")
     input(type="hidden" id="isUser" value=`${!!user}`)
+    input(type="hidden" id="isAdd" value=`${!!isAdd}`)
     .requestdiv
     .picsandints
         if user
@@ -41,5 +42,9 @@ block content
         socket.on('disconnect', () => {
             socket.emit('leaving', 1)
         })
-        if (isUser) socket.emit('isUser', 1)
+        if (isUser && !isAdd) socket.emit('isUser', 1)
+        if (isAdd) socket.emit('hostMess', 1)
+        socket.on('inMess' () => {
+            location = location
+        })
         
