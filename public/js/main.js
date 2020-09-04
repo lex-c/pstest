@@ -59,6 +59,7 @@ setTimeout(() => allImgs.forEach(img => img.addEventListener('mouseover', enlarg
 ftBin.addEventListener('mouseover', opacify)
 ftBin.addEventListener('click', showBin)
 sInp.addEventListener('focus', () => {
+    console.log('seeing it')
     socket.disconnect()
     sInp.addEventListener('blur', () => {
         socket = io()
