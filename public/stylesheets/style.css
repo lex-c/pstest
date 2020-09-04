@@ -62,21 +62,21 @@ footer {
     border-top-left-radius: 2rem;
     border-top-right-radius: 2rem;
     background-color: whitesmoke;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
 }
 #binShow > div {
     display: flex;
+    position: relative;
 }
 #binShow > div > img {
-    width: 20rem;
-    height: auto;
+    width: 20%;
+    height: 20%;
     flex: 1;
     border-radius: 2rem;
 }
 .del-pic {
-    position: relative;
+    position: absolute;
     top: 0.5rem;
     right: 3rem;
     flex: 0;
