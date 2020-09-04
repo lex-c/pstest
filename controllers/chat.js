@@ -19,13 +19,13 @@ const hostAddMess = (req, res) => {
 }
 
 const hostPage = (req, res) => {
-    // if (req.params.userIp) {
-User.findOne({/*ipAdd: req.params.userIp*/}, (err, user) => {
+    if (req.params.userIp) {
+User.findOne({ipAdd: req.params.userIp}, (err, user) => {
             res.render('pics/hostchat', {user})
         })
-    // } else {
-    //     res.render('pics/hostchat')
-    // }
+    } else {
+        res.render('pics/hostchat')
+    }
 }
 
 module.exports = {chatPage, addMess, hostAddMess, hostPage}
