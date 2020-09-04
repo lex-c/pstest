@@ -3,46 +3,46 @@ const User = require('../models/user')
 const axios = require('axios').default
 const _ = require('lodash')
 const passport = require('passport')
-const e = require('express')
-// const sstk = require('shutterstock-api')
-// const applicationConsumerId = process.env.SSTK_KEY
-// const applicationConsumerSecret = process.env.SSTK_SECRET
-// sstk.setBasicAuth(applicationConsumerId, applicationConsumerSecret);
-
-// const imagesApi = new sstk.ImagesApi()
 
 const setUser = (ioVar) => {
     ioVar.on('connection', (socket) => {
         console.log('connected now')
         socket.on('ipsend', ip => {
             console.log('in the ip send', ip)
-            User.findOne({ipAdd: ip}, (err, user) => {
-                if (!user) {
-                    User.create({ipAdd: ip})
-                    .then(user => {console.log('made a new user and on to send pics'); sendPics(user, socket)})
-                } else {
-                    console.log(`found it ${user._id}`)
-                    sendPics(user, socket)
-                }
-            })
+            if (ip[1]) {
+                User.findOneAndDelete({googleId: ip[1]}, (err, userByG) => {
+                    User.findOneAndUpdate({ipAdd: ip}, {name: userByG.name, email: userByG.email, googleId: userByG.googleId, rotPics: []})
+                    .then(user => {
+                        socket.emit('isLogged')
+                        sendPics(user, socket)
+                    })
+                })
+            } else {
+                User.findOne({ipAdd: ip[0]}, (err, user) => {
+                    if (!user) {
+                        User.create({ipAdd: ip[0]}, (err, newUser) => sendPics(newUser, socket))
+                    } else {
+                        sendPics(user, socket)
+                    }
+                })
+            }
         })
         socket.on('upInt', currPicInt => {
             console.log('receiving', currPicInt)
-            User.findOne({ipAdd: currPicInt[2]}, (err, user) => {
+            User.findOne({ipAdd: currPicInt[1]}, (err, user) => {
                 if (!user) return console.log(`in up int no user found; user id ${user._id}`)
                 user.save()
                 .then(user => {
                     const currPicId = currPicInt[0]
-                    const currIntNum = parseInt(currPicInt[1])
                     for (let rotPic of user.rotPics) {
                         if (rotPic.apiPId === currPicId) {
-                            let tot = rotPic.intNum + currIntNum
+                            let tot = rotPic.intNum + 1.2
                             rotPic.set({intNum: tot})
-                            if (currIntNum > 2) {
+                            if (tot > 5) {
                                 let contains = false
                                 for (let intPic of user.intPics) {
                                     if (intPic.apiPId === currPicId) {
-                                        let totInt = intPic.intNum + currIntNum
+                                        let totInt = intPic.intNum + 1.2
                                         intPic.set({intNum: totInt})
                                         contains = true
                                     }
@@ -55,14 +55,58 @@ const setUser = (ioVar) => {
                             }
                         }
                     }
+                    for (let logPic of user.logPics) {
+                        if (logPic.apiPId === currPicId) {
+                            let tot = logPic.intNum + 1.2
+                            logPic.set({intNum: tot})
+                        }
+                    }
                     user.save((err) => {
                         if (err) console.log(err)
                     })
                 })
             })
         })
+        socket.on('picToBin', ipAndPic => {
+            socket.disconnect()
+            User.findOne({ipAdd: ipAndPic[0]}, (err, user) => {
+                let picToHold = [...user.rotPics].filter(pic => pic.apiPId === ipAndPic[1])[0]
+                if (user.binPics.length < 6) {
+                    if (![...user.binPics].filter(pic => pic.apiPId === ipAndPic[1]).length) {
+                        console.log('added!')
+                        user.binPics.push(picToHold)
+                        user.save()
+                    } else {
+                        console.log(`Already in Bin!`)
+                    }
+                } else {
+                    console.log(`Bin Already Full!`)
+                }
+            })
+        })
+        socket.on('showBin', ip => {
+            User.findOne({ipAdd: ip}, (err, user) => {
+                if (!user) return
+                socket.emit('heresBin', user.binPics)
+            })
+        })
+        socket.on('removePic', ipAndPic => {
+            User.findOneAndUpdate({ipAdd: ipAndPic[0]}, {$pull: {'binPics': {'apiPId': ipAndPic[1]}}}, () => socket.disconnect())
+        })
+        // socket.on('customQuery', ipAndQ => {
+        //     if (ipAndQ[1] === '') ipAndQ[1] = ' '
+        //     User.findOne({ipAdd: ipAndQ[0]}, (err, user) => {
+        //         sendPics(user, socket, ipAndQ[1])
+        //     })
+        // })
         socket.on('scrolldwn', ip => {
             User.findOne({ipAdd: ip}, (err, user) => sendPics(user, socket))
+        })
+        socket.on('askToChat', nmIntsIp => {
+            socket.broadcast.emit('incoming', nmIntsIp)
+        })
+        socket.on('leaving', () => {
+            socket.broadcast.emit('hostLeft', 1)
         })
         socket.on('disconnect', () => {
             console.log('they left now')
@@ -70,25 +114,30 @@ const setUser = (ioVar) => {
     })
 }
 
-const sendPics = (user, socket) => {
-    console.log(`in the send pics; user: ${user._id} tags: ${user.intTags}`)
+const sendPics = (user, socket, Q) => {
     user.save()
     .then(user => {
         let optimTags, tagsToSave, allTags, optimToQuery
+        // if (Q) {
+        //     console.log(`in the Q in send and here's the Q: ${Q} and here's user ${user.ipAdd}`)
+        //     optimTags = ''
+        //     tagsToSave = (user.intTags || '')
+        //     optimToQuery = Q
+        // } else 
         if (user.intPics.length) {
             allTags = user.intPics.reduce((a, pic) => {pic.picTags.forEach(tag => a.push(tag)); return a}, [])
             tagsToSave = _.chain(allTags).countBy().toPairs().sortBy(1).reverse().map(0).value().slice(0, 4)
-            optimTags = tagsToSave.slice(0, 2)
+            optimTags = tagsToSave.slice(0, 3)
         } else if (user.logPics.length) {
             allTags = user.logPics.reduce((a, pic) => {pic.picTags.forEach(tag => a.push(tag)); return a}, [])
             tagsToSave = _.chain(allTags).countBy().toPairs().sortBy(1).reverse().map(0).value().slice(0, 4)
-            optimTags = tagsToSave.slice(0, 2)
+            optimTags = tagsToSave.slice(0, 3)
         } else {
             optimTags = ''
             tagsToSave = ''
             optimToQuery = 'food'
         }
-        if (optimTags) optimToQuery = [...optimTags].join('+')
+        if (optimTags) optimToQuery = `${optimTags[0]}+${optimTags[1]} OR ${optimTags[1]}+${optimTags[2]} OR ${optimTags[2]}+${optimTags[0]}`
         const options = {
             url: 'https://pixabay.com/api/',
             method: 'get',
@@ -102,7 +151,6 @@ const sendPics = (user, socket) => {
         }
         axios(options)
         .then(response => {
-            console.log(`api response: ${response.data.hits.map(hit => hit.id)}`)
             let currentRotPics = response.data.hits.reduce((a, hit) => {a.push({picUrl: hit.webformatURL, picTags: hit.tags.split(' ').join('').split(','), apiPId: hit.id}); return a}, [])
             let userRotPicsArr
             if (user.rotPics.length) {
@@ -125,10 +173,10 @@ const sendPics = (user, socket) => {
                 userRotPicsArr = currentRotPics
             }
             user.set({intTags: [...tagsToSave]})
+            if (user.rotPics.length) user.set({logPics: [...user.rotPics]})
             user.set({rotPics: userRotPicsArr})
             user.save((err, user) => {
                 if (err) return console.log(err)
-                console.log(`curr rot pics: ${user.rotPics.map(pic => pic.apiPId)}`)
                 socket.emit('nextPics', user.rotPics)
             })
         })

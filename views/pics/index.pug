@@ -2,55 +2,100 @@ extends ../partials/header
 block content
     noscript
         iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NRKGV7C" height="0" width="0" style="display:none;visibility:hidden")
-    if (user)
-        h1 Hi #{name}
-    h1 ps Home
+    h1 Pics Explorer
+    if user
+        h2 Hi #{user.name}! Welcome back! Thanks for signing in again! We love you no matter what 😋
+    else if ipUser
+        h2 Hi #{ipUser.name}! Welcome back! We see you haven't signed in yet. Please do to get access to your bin!
+    else if ints
+        if ints.length
+            mixin intsList(arr)
+                each int, i in arr
+                    unless i === arr.length - 1
+                        span 
+                            | #{int} and
+                    if i === arr.length - 1
+                        span 
+                            | #{int}! 😃
+            h2 Hihi! We see you came back! Please sign in! You'll get a bin where you can put your fav pics of
+                +intsList(ints)
+        else
+            h2 Hi! Welcome back! Please keep browsing and enjoy, but do consider signing in at some point; you'll get access to a bin for your very own favs! 😊
+    else
+        h2 Hi! Welcome to the site! Please enjoy and remember, you can sign in to get a bin!
+    //- label(for="query") Category:
+    //- input(type="text" id="uQInp")
+    //- button(type="submit" id="uQIBtn") SET 
     input(id="ipInp" type="hidden" value=ip)
-    #p11D
-        img(id="pic11" class="top-img")
-    #p12D
-        img(id="pic12" class="top-img")
-    #p13D
-        img(id="pic13" class="top-img")
-    #p14D
-        img(id="pic14" class="top-img")
-    #p15D
-        img(id="pic15" class="top-img")
-    #p16D
-        img(id="pic16" class="top-img")
-    #p17D
-        img(id="pic17" class="top-img")
-    #p18D
-        img(id="pic18" class="top-img")
-    #p19D
-        img(id="pic19" class="top-img")
-    #p20D
-        img(id="pic20" class="top-img")
-    #p1D
-        img(id="pic1" class="btm-img")
-    #p2D
-        img(id="pic2" class="btm-img")
-    #p3D
-        img(id="pic3" class="btm-img")
-    #p4D
-        img(id="pic4" class="btm-img")
-    #p5D
-        img(id="pic5" class="btm-img")
-    #p6D
-        img(id="pic6" class="btm-img")
-    #p7D
-        img(id="pic7" class="btm-img")
-    #p8D
-        img(id="pic8" class="btm-img")
-    #p9D
-        img(id="pic9" class="btm-img")
-    #p10D
-        img(id="pic10" class="btm-img")
+    - var gidVal = user ? user.googleId : null
+    input(id="gIDInp" type="hidden" value=gidVal)
 
+    #p11D.imgD
+        img(id="pic11" class="top-img")
+        div.imgP11 +
+    #p12D.imgD
+        img(id="pic12" class="top-img")
+        div.imgP12 +
+    #p13D.imgD
+        img(id="pic13" class="top-img")
+        div.imgP13 +
+    #p14D.imgD
+        img(id="pic14" class="top-img")
+        div.imgP14 +
+    #p15D.imgD
+        img(id="pic15" class="top-img")
+        div.imgP15 +
+    #p16D.imgD
+        img(id="pic16" class="top-img")
+        div.imgP16 +
+    #p17D.imgD
+        img(id="pic17" class="top-img")
+        div.imgP17 +
+    #p18D.imgD
+        img(id="pic18" class="top-img")
+        div.imgP18 +
+    #p19D.imgD
+        img(id="pic19" class="top-img")
+        div.imgP19 +
+    #p20D.imgD
+        img(id="pic20" class="top-img")
+        div.imgP20 +
+    #p1D.imgD
+        img(id="pic1" class="btm-img")
+        div.imgP1 +
+    #p2D.imgD
+        img(id="pic2" class="btm-img")
+        div.imgP2 +
+    #p3D.imgD
+        img(id="pic3" class="btm-img")
+        div.imgP3 +
+    #p4D.imgD
+        img(id="pic4" class="btm-img")
+        div.imgP4 +
+    #p5D.imgD
+        img(id="pic5" class="btm-img")
+        div.imgP5 +
+    #p6D.imgD
+        img(id="pic6" class="btm-img")
+        div.imgP6 +
+    #p7D.imgD
+        img(id="pic7" class="btm-img")
+        div.imgP7 +
+    #p8D.imgD
+        img(id="pic8" class="btm-img")
+        div.imgP8 +
+    #p9D.imgD
+        img(id="pic9" class="btm-img")
+        div.imgP9 +
+    #p10D.imgD
+        img(id="pic10" class="btm-img")
+        div.imgP10 +
+    #binShow
     include ../partials/footer
     script(src="/js/main.js")
     script(src="/socket.io/socket.io.js")
     script.
         var socket = io()
-        socket.emit('ipsend', ipVal)
+        socket.emit('ipsend', [ipVal, gID])
+        socket.on('isLogged', () => ftBin.style.setProperty('display', 'flex'))
         socket.on('nextPics', putPicsIn)

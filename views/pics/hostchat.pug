@@ -1,0 +1,43 @@
+extends ../partials/hostchatheader
+block content
+    noscript
+        iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NRKGV7C" height="0" width="0" style="display:none;visibility:hidden")
+    .requestdiv
+    .picsandints
+        if user
+            .binpics Bin:
+                if user.binPics.length
+                    each pic in user.binPics
+                        img(src=pic.picUrl data-picid=pic.apiPId)
+            .intpics Likes:
+                if user.intPics.length
+                    each pic in user.intPics
+                        img(src=pic.picUrl data-picid=pic.apiPId)
+            .inttags Interests:
+                if user.intTags.length
+                    each tag in user.intTags
+                        div #{tag}
+    .messandtext
+        .messes
+            if user
+                if user.messages.length
+                    each message, index in user.messages
+                        unless index < user.messages.length - 6
+                            if message.sent
+                                div.userMess #{message.message} #[small #{message.createdAt.toLocaleString()}]
+                            else
+                                div.hostMess #{message.message} #[small #{message.createdAt.toLocaleString()}]
+        .chat-text
+            if user
+                form(action=`/chat/${user.ipAdd}/messages/host` method="POST")
+                    textarea(cols="30", rows="10" class="messtext" name="message" placeholder="please type your lovely message here")
+                    button(type="submit") SEND
+    script(src="/js/hostchatmain.js")
+    script(src="/socket.io/socket.io.js")
+    script.
+        var socket = io()
+        socket.on('incoming', showRequest)
+        socket.on('disconnect', () => {
+            socket.emit('leaving', 1)
+        })
+        

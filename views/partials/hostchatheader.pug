@@ -1,7 +1,7 @@
 head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="/stylesheets/style.css")
+        link(rel="stylesheet", href="/stylesheets/hostchatstyle.css")
         script(src="https://kit.fontawesome.com/8713148416.js" crossorigin="anonymous")
         script.
                 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -12,11 +12,6 @@ head
         title IntDesigns #{title}
         body
                 nav
-                        a(href="/pics") Pics
-                        a(href=`/chat/${ip}`) Chat
-                        a(href="/chat/host") Host
-                        if (user)
-                            a(href="../auth/logout") logout
-                        else
-                            a(href="../auth/google") login
+                    a(href="/pics") Pics
+                    a(href="/chat/host") Host
                 block content

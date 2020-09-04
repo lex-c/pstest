@@ -7,7 +7,10 @@ const picSchema = new Schema({
     intNum: {type: Number, default: 0},
     apiPId: String
 })
-
+const messSchema = new Schema({
+    message: String,
+    sent: {type: Boolean, default: false}
+}, {timestamps: true})
 
 const userSchema = new Schema({
     name: String,
@@ -18,6 +21,8 @@ const userSchema = new Schema({
     intPics: {type: [picSchema], default: []},
     rotPics: {type: [picSchema], default: []},
     logPics: {type: [picSchema], default: []},
+    binPics: {type: [picSchema], default: []},
+    messages: {type: [messSchema], default: []}
 }, {timestamps: true})
 
 module.exports = mongoose.model('User', userSchema)

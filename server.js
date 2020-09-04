@@ -13,7 +13,7 @@ const cors = require('cors')
 const indexRouter = require('./routes/index')
 const picsRouter = require('./routes/pics')
 const authRouter = require('./routes/auth')
-// const twosRouter = require('./routes/typetwos')
+const chatRouter = require('./routes/chat')
 
 const app = express()
 
@@ -37,7 +37,7 @@ app.use(passport.session())
 app.use('/', indexRouter)
 app.use('/pics', picsRouter)
 app.use('/auth', authRouter)
-// app.use('/typetwos', twosRouter)
+app.use('/chat', chatRouter)
 
 app.use((req, res, next) => next(httpErrors(404)))
 app.use((err, req, res, next) => {

@@ -13,6 +13,7 @@ html {
 }
 
 body {
+    position: relative;
     height: 100vh;
     margin: 0;
     font-size: 2rem;
@@ -22,9 +23,17 @@ body {
     align-items: center;
 }
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 15%;
+    height: 6rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    background-color: rgba(200, 200, 200, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
 }
 .larger {
     height: 50rem;
@@ -33,4 +42,57 @@ footer {
 .regular {
     height: initial;
     width: initial;
+}
+.opaque {
+    background-color: rgba(200, 200, 200, 0.7);
+}
+#binShow {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 60%;
+    height: 55%;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    background-color: whitesmoke;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#binShow > div {
+    display: flex;
+}
+#binShow > div > img {
+    width: 20rem;
+    height: auto;
+    flex: 1;
+    border-radius: 2rem;
+}
+.del-pic {
+    position: relative;
+    top: 0.5rem;
+    right: 3rem;
+    flex: 0;
+    background-color: rgba(150, 150, 150, 0.4);
+    border-radius: 0.8rem;
+    color: whitesmoke;
+    height: fit-content;
+    padding: 0.4rem;
+}
+.imgD {
+    position: relative;
+}
+.imgP1, .imgP2, .imgP3, .imgP4, .imgP5, .imgP6, .imgP7, .imgP8, .imgP9, .imgP10, .imgP11, .imgP12, .imgP13, .imgP14, .imgP15, .imgP16, .imgP17, .imgP18, .imgP19, .imgP20 {
+    display: none;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    font-size: 10rem;
+    color: #eeeeee;
+    text-shadow: black 0 0 1rem;
+    padding: 0.4rem;
+    line-height: 7rem;
+}
+.visPlus {
+    display: inherit;
 }

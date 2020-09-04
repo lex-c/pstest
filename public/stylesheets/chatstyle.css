@@ -1,0 +1,124 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 62.5%;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #555555;
+    display: flex;
+    flex-direction: column;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: violet;
+    z-index: 1;
+    font-size: 3rem;
+    height: 5vh;
+}
+nav > a.picsnav {
+    display: flex;
+    background-color: teal;
+    border-bottom-right-radius: 2rem;
+    padding: 1rem;
+    padding-right: 1.5rem;
+    text-decoration: none;
+}
+nav > a.chatnav {
+    display: flex;
+    background-color: teal;
+    border-bottom-left-radius: 2rem;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    text-decoration: none;
+}
+h1 {
+    position: absolute;
+}
+.picsdiv {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #999999;
+}
+img {
+    width: 20%;
+    height: auto;
+    border-radius: 1.5rem;
+}
+.textandmess {
+    display: flex;
+    height: 45vh;
+}
+.chat-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+.messblock {
+    background-color: whitesmoke;
+    z-index: 2;
+    position: absolute;
+    height: 25rem;
+    width: 40rem;
+    border-radius: 2rem;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.messtext {
+    height: auto;
+    width: auto;
+    font-size: 2rem;
+}
+.chat-text > form {
+    display: flex;
+    flex-direction: column;
+}
+.messes {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.messes > div {
+    font-size: 2rem;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    width: fit-content;
+}
+.messes > div.userMess {
+    background-color: lightskyblue;
+    color: white;
+    align-self: flex-start;
+}
+.messes > div.hostMess {
+    background-color: grey;
+    color: white;
+    align-self: flex-end;
+}
+
+
+
+
+
+
+
+
+
+

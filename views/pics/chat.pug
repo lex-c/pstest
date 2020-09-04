@@ -1,0 +1,34 @@
+extends ../partials/chatheader
+block content
+    noscript
+        iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-NRKGV7C" height="0" width="0" style="display:none;visibility:hidden")
+    input(id="nmInp" type="hidden" value=user.name)
+    input(id="itInp" type="hidden" value=user.intTags)
+    input(id="ipInp" type="hidden" value=user.ipAdd)
+    .picsdiv
+        if user.binPics.length
+            each pic in user.binPics
+                img(src=pic.picUrl data-picid=pic.apiPId)
+    .textandmess
+        .chat-text
+            .messblock wating for host to accept...
+            form(action=`/chat/${user.ipAdd}/messages` method="POST")
+                textarea(cols="30", rows="10" class="messtext" name="message" placeholder="please type your lovely message here")
+                input(type="hidden" name="sent" value=`${false}`)
+                button(type="submit") SEND
+        .messes
+            if user.messages.length
+                each message, index in user.messages
+                    unless index < user.messages.length - 3
+                        if message.sent
+                            div.userMess #{message.message} #[small #{message.createdAt.toLocaleString()}]
+                        else
+                            div.hostMess #{message.message} #[small #{message.createdAt.toLocaleString()}]
+    script(src="/js/chatmain.js")
+    script(src="/socket.io/socket.io.js")
+    script.
+        if 
+        var socket = io()
+        socket.emit('askToChat', [nmVal, itVal, ipVal])
+        socket.on('rqAccepted', hideMess)
+        socket.on('hostLeft', showMess)
