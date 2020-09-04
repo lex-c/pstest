@@ -93,12 +93,12 @@ const setUser = (ioVar) => {
         socket.on('removePic', ipAndPic => {
             User.findOneAndUpdate({ipAdd: ipAndPic[0]}, {$pull: {'binPics': {'apiPId': ipAndPic[1]}}}, () => socket.disconnect())
         })
-        // socket.on('customQuery', ipAndQ => {
-        //     if (ipAndQ[1] === '') ipAndQ[1] = ' '
-        //     User.findOne({ipAdd: ipAndQ[0]}, (err, user) => {
-        //         sendPics(user, socket, ipAndQ[1])
-        //     })
-        // })
+        socket.on('customQuery', ipAndQ => {
+            if (ipAndQ[1] === '') ipAndQ[1] = ' '
+            User.findOne({ipAdd: ipAndQ[0]}, (err, user) => {
+                sendPics(user, socket, ipAndQ[1])
+            })
+        })
         socket.on('scrolldwn', ip => {
             User.findOne({ipAdd: ip}, (err, user) => sendPics(user, socket))
         })
@@ -118,13 +118,11 @@ const sendPics = (user, socket, Q) => {
     user.save()
     .then(user => {
         let optimTags, tagsToSave, allTags, optimToQuery
-        // if (Q) {
-        //     console.log(`in the Q in send and here's the Q: ${Q} and here's user ${user.ipAdd}`)
-        //     optimTags = ''
-        //     tagsToSave = (user.intTags || '')
-        //     optimToQuery = Q
-        // } else 
-        if (user.intPics.length) {
+        if (Q) {
+            optimTags = ''
+            tagsToSave = (user.intTags || '')
+            optimToQuery = Q
+        } else if (user.intPics.length) {
             allTags = user.intPics.reduce((a, pic) => {pic.picTags.forEach(tag => a.push(tag)); return a}, [])
             tagsToSave = _.chain(allTags).countBy().toPairs().sortBy(1).reverse().map(0).value().slice(0, 4)
             optimTags = tagsToSave.slice(0, 3)
@@ -135,7 +133,7 @@ const sendPics = (user, socket, Q) => {
         } else {
             optimTags = ''
             tagsToSave = ''
-            optimToQuery = 'food'
+            optimToQuery = 'meal'
         }
         if (optimTags) optimToQuery = `${optimTags[0]}+${optimTags[1]} OR ${optimTags[1]}+${optimTags[2]} OR ${optimTags[2]}+${optimTags[0]}`
         const options = {

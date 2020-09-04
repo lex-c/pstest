@@ -1,5 +1,5 @@
-// var sBtn = document.getElementById('uQIBtn')
-// var sInp = document.getElementById('uQInp')
+var sBtn = document.getElementById('uQIBtn')
+var sInp = document.getElementById('uQInp')
 var p1D = document.getElementById('p1D')
 var p2D = document.getElementById('p2D')
 var p3D = document.getElementById('p3D')
@@ -55,14 +55,22 @@ bottomImgs = document.querySelectorAll('.btm-img')
 
 setTimeout(() => allImgs.forEach(img => img.addEventListener('mouseover', enlarge)), 4000)
 
-// sBtn.addEventListener('click', sendPicsQuery)
 
 ftBin.addEventListener('mouseover', opacify)
 ftBin.addEventListener('click', showBin)
-
-// function sendPicsQuery(e) {
-//     socket.emit('customQuery', [ipVal, sInp.value])
-// }
+sInp.addEventListener('focus', () => {
+    socket.disconnect()
+    sInp.addEventListener('blur', () => {
+        socket = io()
+        socket.on('isLogged', () => ftBin.style.setProperty('display', 'flex'))
+        socket.on('nextPics', putPicsIn)
+    })
+    sBtn.addEventListener('click', sendPicsQuery)
+})
+function sendPicsQuery(e) {
+    socket = io()
+    socket.emit('customQuery', [ipVal, sInp.value])
+}
 
 
 function opacify(e) {

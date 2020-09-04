@@ -23,9 +23,9 @@ block content
             h2 Hi! Welcome back! Please keep browsing and enjoy, but do consider signing in at some point; you'll get access to a bin for your very own favs! 😊
     else
         h2 Hi! Welcome to the site! Please enjoy and remember, you can sign in to get a bin!
-    //- label(for="query") Category:
-    //- input(type="text" id="uQInp")
-    //- button(type="submit" id="uQIBtn") SET 
+    label(for="query") Category:
+    input(type="text" id="uQInp")
+    button(type="submit" id="uQIBtn") SET 
     input(id="ipInp" type="hidden" value=ip)
     - var gidVal = user ? user.googleId : null
     input(id="gIDInp" type="hidden" value=gidVal)
