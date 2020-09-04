@@ -27,7 +27,6 @@ block content
     script(src="/js/chatmain.js")
     script(src="/socket.io/socket.io.js")
     script.
-        if 
         var socket = io()
         socket.emit('askToChat', [nmVal, itVal, ipVal])
         socket.on('rqAccepted', hideMess)
