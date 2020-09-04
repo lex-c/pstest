@@ -36,5 +36,5 @@ block content
         if (!!isAdd) hideMess()
         if (!!isAdd && !!me) socket.emit('userMess', 1)
         socket.on('inMess', () => {
-            location = `https://intdesigns.herokuapp.com/chat/${ipVal}/true/false`
+            location = `https://intdesigns.herokuapp.com/chat/${ipVal}/true`
         })
