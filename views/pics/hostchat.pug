@@ -46,7 +46,7 @@ block content
             socket.emit('leaving', 1)
         })
         if (isUser && !isAdd) socket.emit('isUser', 1)
-        if (isAdd && me) socket.emit('hostMess', 1)
+        if (isAdd && !!me) socket.emit('hostMess', 1)
         socket.on('inMess', () => {
             location = `https://intdesigns.herokuapp.com/chat/host/${ipVal}/true/false`
         })
