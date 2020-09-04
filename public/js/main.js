@@ -70,6 +70,8 @@ sInp.addEventListener('focus', () => {
 })
 function sendPicsQuery(e) {
     socket = io()
+    socket.on('isLogged', () => ftBin.style.setProperty('display', 'flex'))
+    socket.on('nextPics', putPicsIn)
     socket.emit('customQuery', [ipVal, sInp.value])
 }
 
