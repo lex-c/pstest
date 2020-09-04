@@ -30,6 +30,9 @@ nav {
 }
 .requestdiv {
     display: none;
+    position: absolute;
+    top: 50%;
+    left: 30%;
     background-color: #cccccc;
     color: #555555;
     height: 10rem;
