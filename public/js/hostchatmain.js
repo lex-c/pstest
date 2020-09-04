@@ -2,7 +2,11 @@
 
 
 const reqD = document.querySelector('.requestdiv')
+const isUser = document.getElementById('isUser').value
 let name, intsMess
+
+
+
 const showRequest = (nameIntsIp) => {
     console.log('getting the request')
     name = nameIntsIp[0] ? nameIntsIp[0] : `Someone who hasn't given their name`

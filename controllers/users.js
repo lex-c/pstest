@@ -106,6 +106,9 @@ const setUser = (ioVar) => {
             console.log('in asktochat')
             socket.broadcast.emit('incoming', nmIntsIp)
         })
+        socket.on('isUser', () => {
+            socket.broadcast.emit('rqAccepted', 1)
+        })
         socket.on('leaving', () => {
             socket.broadcast.emit('hostLeft', 1)
         })
