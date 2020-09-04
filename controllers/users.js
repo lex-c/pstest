@@ -103,10 +103,11 @@ const setUser = (ioVar) => {
             User.findOne({ipAdd: ip}, (err, user) => sendPics(user, socket))
         })
         socket.on('askToChat', nmIntsIp => {
-            socket.broadcast.emit('incoming', nmIntsIp)
+            console.log('in asktochat')
+            socket.broadcast('incoming', nmIntsIp)
         })
         socket.on('leaving', () => {
-            socket.broadcast.emit('hostLeft', 1)
+            socket.broadcast('hostLeft', 1)
         })
         socket.on('disconnect', () => {
             console.log('they left now')
