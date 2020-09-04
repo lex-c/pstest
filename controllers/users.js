@@ -104,10 +104,10 @@ const setUser = (ioVar) => {
         })
         socket.on('askToChat', nmIntsIp => {
             console.log('in asktochat')
-            socket.broadcast('incoming', nmIntsIp)
+            socket.broadcast.emit('incoming', nmIntsIp)
         })
         socket.on('leaving', () => {
-            socket.broadcast('hostLeft', 1)
+            socket.broadcast.emit('hostLeft', 1)
         })
         socket.on('disconnect', () => {
             console.log('they left now')
