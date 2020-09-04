@@ -6,6 +6,7 @@ block content
     input(id="itInp" type="hidden" value=user.intTags)
     input(id="ipInp" type="hidden" value=user.ipAdd)
     input(id="isAdd" type="hidden" value=isAdd)
+    input(id="me" type="hidden" value=me)
     .picsdiv
         if user.binPics.length
             each pic in user.binPics
@@ -32,7 +33,8 @@ block content
         if (!isAdd) socket.emit('askToChat', [nmVal, itVal, ipVal])
         socket.on('rqAccepted', hideMess)
         socket.on('hostLeft', showMess)
-        if (!!isAdd) {hideMess(); socket.emit('userMess', 1)}
+        if (!!isAdd) hideMess()
+        if (!!isAdd && !!me) socket.emit('userMess', 1)}
         socket.on('inMess', () => {
-            location = `https://intdesigns.herokuapp.com/chat/${ipVal}/true`
+            location = `https://intdesigns.herokuapp.com/chat/${ipVal}/true/false`
         })

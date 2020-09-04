@@ -5,7 +5,8 @@ block content
     input(type="hidden" id="isUser" value=`${!!user}`)
     input(type="hidden" id="isAdd" value=isAdd)
     -const ipAdd = user ? user.ipAdd : null
-    input(type="hidden" id="userIp" value=`${ipAdd}`)
+    input(type="hidden" id="userIp" value=ipAdd)
+    input(id="me" type="hidden" value=me)
     .requestdiv
     .picsandints
         if user
@@ -45,8 +46,8 @@ block content
             socket.emit('leaving', 1)
         })
         if (isUser && !isAdd) socket.emit('isUser', 1)
-        if (isAdd) socket.emit('hostMess', 1)
+        if (isAdd && me) socket.emit('hostMess', 1)
         socket.on('inMess', () => {
-            location = `https://intdesigns.herokuapp.com/chat/host/${ipVal}/true`
+            location = `https://intdesigns.herokuapp.com/chat/host/${ipVal}/true/false`
         })
         
