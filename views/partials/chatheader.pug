@@ -13,8 +13,7 @@ head
         body
                 nav
                         form(action="/pics" method="GET")
-                            -const qInp = user.googleId ? JSON.stringify(user) : false
-                            input(type="hidden" name="user" value=qInp)
+                            input(type="hidden" name="userIp" value=user.ipAdd)
                             button(class="picsnav" type="submit") Pics
                         form(action=`/chat/${user.ipAdd}` method="GET")
                             button(class="chatnav" type="submit") Chat
