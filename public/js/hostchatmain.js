@@ -5,7 +5,9 @@ const reqD = document.querySelector('.requestdiv')
 const isUser = document.getElementById('isUser').value
 const isAdd = document.getElementById('isAdd').value
 const ipVal = document.getElementById('userIp').value
+const me = document.getElementById('me').value
 let name, intsMess
+
 
 
 
