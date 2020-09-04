@@ -96,3 +96,6 @@ footer {
 .visPlus {
     display: inherit;
 }
+.qSet {
+    position: sticky;
+}
