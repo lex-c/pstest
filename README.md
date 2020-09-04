@@ -42,6 +42,29 @@ User info is savved and transmitted to host in the event user goes to chat
 ```
 ### App Screenshots
 
+### Wireframes
+![wireframes](./images/IMG_2538.jpg)
+
+### Deployment Link
+[intdesigns](https://intdesigns.herokuapp.com)
+
+### Technologies Used
+- NodeJS
+- Expressjs
+- Express Generator
+- MongoDB
+- MongooseJS
+- MongoDB Atlas
+- EJS Templating
+- Heroku with NodeJS
+- Fetch in JS
+- Google OAuth 2.0
+- PassportJS
+- Lodash
+- Pixabay API
+- Socket io
+
+
 
 
 
