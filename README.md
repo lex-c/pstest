@@ -40,7 +40,14 @@ Login opens visibility of bin. Bin is updated and items added /removed by socket
 
 User info is savved and transmitted to host in the event user goes to chat
 ```
+
+### Trello
+[trello](https://trello.com/b/qKw7LmFC/psproject)
+
 ### App Screenshots
+![scrollpg](images/scrollpg.png)
+![binatlogin](images/binatlogin.png)
+![chatpg](images/chatpg.png)
 
 ### Wireframes
 ![wireframes](./images/IMG_2538.jpg)
